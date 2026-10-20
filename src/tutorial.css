@@ -1,0 +1,720 @@
+/* ════════════════════════════════════════════════════════════════
+   VOIDSTEP — Hafif Eğitim (Tutorial) Stilleri
+   Tamamen HTML + CSS (Görsel, GIF, kütüphane yok)
+   Sadece transform ve opacity ile 60 FPS GPU dostu animasyonlar
+   ════════════════════════════════════════════════════════════════ */
+
+#tutorial-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, rgba(6, 12, 32, 0.88) 0%, rgba(3, 5, 14, 0.96) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 250;
+  padding: 16px;
+  animation: tutFadeIn 0.25s ease-out;
+}
+
+@keyframes tutFadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.tutorial-modal {
+  position: relative;
+  width: 90vw;
+  max-width: 480px;
+  background: rgba(8, 14, 34, 0.92);
+  border: 1px solid rgba(0, 240, 255, 0.35);
+  border-radius: 18px;
+  padding: 24px 28px 20px;
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.6),
+    0 0 32px rgba(0, 240, 255, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Siber Köşe Vurguları */
+.tut-corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--cyan);
+  border-style: solid;
+  pointer-events: none;
+}
+.tut-corner.tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; border-top-left-radius: 10px; }
+.tut-corner.tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; border-top-right-radius: 10px; }
+.tut-corner.bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; border-bottom-left-radius: 10px; }
+.tut-corner.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; border-bottom-right-radius: 10px; }
+
+/* Adım Başlığı & Rozet */
+.tutorial-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.tutorial-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--cyan);
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.tutorial-step-title {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: 20px;
+  color: #ffffff;
+  letter-spacing: 2px;
+  text-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
+}
+
+/* ══════════════ ANİMASYON SAHNESİ (CSS ONLY) ══════════════ */
+.tutorial-stage {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  background: rgba(4, 8, 20, 0.8);
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CSS Küp & Platform Öğeleri */
+.css-cube {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: 2px solid var(--cyan);
+  background: rgba(0, 240, 255, 0.25);
+  box-shadow: 0 0 12px var(--cyan);
+  will-change: transform;
+}
+
+.css-platform {
+  position: absolute;
+  height: 10px;
+  border-radius: 3px;
+  border: 1.5px solid var(--cyan);
+  background: rgba(6, 12, 30, 0.9);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+/* Mini Sanal Buton Taklitleri */
+.demo-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 2px solid rgba(0, 240, 255, 0.4);
+  background: rgba(6, 12, 30, 0.8);
+  color: var(--cyan);
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  will-change: transform, box-shadow;
+}
+
+/* ── ADIM 1: ZIPLAMA ANİMASYONU ── */
+.stage-step-1 .demo-btn-jump {
+  position: absolute;
+  left: 48px;
+  width: 54px;
+  height: 54px;
+  border-color: rgba(168, 68, 255, 0.6);
+  color: #c988ff;
+  font-size: 20px;
+  animation: demoJumpBtnPulse 1.8s ease-in-out infinite;
+}
+
+.stage-step-1 .css-platform-1 {
+  bottom: 24px;
+  right: 48px;
+  width: 120px;
+}
+
+.stage-step-1 .css-cube-1 {
+  bottom: 36px;
+  right: 96px;
+  animation: demoCubeJump 1.8s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+}
+
+@keyframes demoJumpBtnPulse {
+  0%, 15%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(168, 68, 255, 0.3);
+    background: rgba(6, 12, 30, 0.8);
+  }
+  20%, 35% {
+    transform: scale(0.9);
+    box-shadow: 0 0 24px rgba(168, 68, 255, 0.9);
+    background: rgba(168, 68, 255, 0.35);
+  }
+}
+
+@keyframes demoCubeJump {
+  0%, 18% {
+    transform: translateY(0);
+  }
+  35% {
+    transform: translateY(-46px) rotate(-15deg);
+  }
+  55%, 100% {
+    transform: translateY(0) rotate(0);
+  }
+}
+
+/* ── ADIM 2: YÖN VERME ANİMASYONU ── */
+.stage-step-2 .demo-arrow-group {
+  position: absolute;
+  right: 40px;
+  display: flex;
+  gap: 10px;
+}
+
+.stage-step-2 .demo-btn-arrow {
+  width: 48px;
+  height: 48px;
+  font-size: 18px;
+}
+
+.stage-step-2 .btn-l {
+  animation: demoArrowLeftPulse 2.4s ease-in-out infinite;
+}
+.stage-step-2 .btn-r {
+  animation: demoArrowRightPulse 2.4s ease-in-out infinite;
+}
+
+.stage-step-2 .css-platform-2 {
+  bottom: 24px;
+  left: 40px;
+  width: 140px;
+}
+
+.stage-step-2 .css-cube-2 {
+  bottom: 36px;
+  left: 98px;
+  animation: demoCubeStrafe 2.4s ease-in-out infinite;
+}
+
+@keyframes demoArrowLeftPulse {
+  0%, 40% {
+    transform: scale(0.92);
+    border-color: #00f0ff;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.8);
+    background: rgba(0, 240, 255, 0.25);
+  }
+  48%, 100% {
+    transform: scale(1);
+    border-color: rgba(0, 240, 255, 0.4);
+    box-shadow: none;
+    background: rgba(6, 12, 30, 0.8);
+  }
+}
+
+@keyframes demoArrowRightPulse {
+  0%, 48% {
+    transform: scale(1);
+    border-color: rgba(0, 240, 255, 0.4);
+    box-shadow: none;
+    background: rgba(6, 12, 30, 0.8);
+  }
+  55%, 92% {
+    transform: scale(0.92);
+    border-color: #00f0ff;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.8);
+    background: rgba(0, 240, 255, 0.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes demoCubeStrafe {
+  0%, 10% { transform: translateX(0); }
+  25%, 45% { transform: translateX(-40px); }
+  55% { transform: translateX(0); }
+  70%, 90% { transform: translateX(40px); }
+  100% { transform: translateX(0); }
+}
+
+/* ── ADIM 3: BOŞLUKLARDAN ATLAMA ANİMASYONU ── */
+.stage-step-3 .css-plat-left {
+  bottom: 24px;
+  left: 48px;
+  width: 90px;
+}
+
+.stage-step-3 .css-plat-right {
+  bottom: 24px;
+  right: 48px;
+  width: 90px;
+  border-color: var(--amber);
+  box-shadow: 0 0 10px rgba(255, 153, 0, 0.3);
+}
+
+.stage-step-3 .css-cube-gap {
+  bottom: 36px;
+  left: 90px;
+  animation: demoCubeGapCross 2.6s ease-in-out infinite;
+}
+
+@keyframes demoCubeGapCross {
+  0%, 15% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  45% {
+    transform: translate(90px, -42px) rotate(45deg) scale(1);
+    opacity: 1;
+  }
+  70%, 90% {
+    transform: translate(160px, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  95%, 100% {
+    transform: translate(160px, 0) scale(0.8);
+    opacity: 0;
+  }
+}
+
+/* ── ADIM 4: FENER & 3'LÜ KÜME ANİMASYONU ── */
+.stage-step-4 {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 440px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  box-sizing: border-box;
+}
+
+.stage-step-4 .batch-card {
+  position: relative;
+  width: 44%;
+  height: 82px;
+  border-radius: 10px;
+  padding: 8px 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: opacity 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stage-step-4 .batch-dark {
+  border: 1.5px dashed rgba(0, 240, 255, 0.3);
+  background: rgba(6, 12, 30, 0.7);
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.5);
+}
+
+.stage-step-4 .batch-lit {
+  border: 1.5px solid var(--cyan);
+  background: rgba(0, 240, 255, 0.08);
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.25);
+  animation: demoLitBatchCycle 3.8s ease-in-out infinite;
+}
+
+.stage-step-4 .batch-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+}
+
+.stage-step-4 .batch-state-icon {
+  font-size: 11px;
+}
+
+.stage-step-4 .beam-pulse {
+  color: var(--cyan);
+  text-shadow: 0 0 8px var(--cyan);
+  animation: demoBeamIconPulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes demoBeamIconPulse {
+  from { transform: scale(1); opacity: 0.8; }
+  to { transform: scale(1.3); opacity: 1; }
+}
+
+.stage-step-4 .batch-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.stage-step-4 .batch-dark .batch-title {
+  color: rgba(0, 240, 255, 0.5);
+}
+
+.stage-step-4 .batch-lit .batch-title {
+  color: var(--cyan);
+  text-shadow: 0 0 6px rgba(0, 240, 255, 0.5);
+}
+
+.stage-step-4 .batch-plats-row {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+}
+
+.stage-step-4 .batch-plat {
+  flex: 1;
+  height: 22px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  box-sizing: border-box;
+}
+
+.stage-step-4 .b-dark {
+  border: 1.5px dashed rgba(0, 240, 255, 0.35);
+  color: rgba(0, 240, 255, 0.4);
+  background: rgba(4, 10, 22, 0.6);
+}
+
+.stage-step-4 .b-lit {
+  border: 1.5px solid var(--cyan);
+  color: #ffffff;
+  background: rgba(0, 240, 255, 0.3);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+}
+
+/* Uyarı rozeti: 3. bloktan zıplayınca öndeki küme sönüyor */
+.stage-step-4 .batch-fade-alert {
+  position: absolute;
+  top: -10px;
+  right: 6px;
+  background: rgba(255, 153, 0, 0.95);
+  color: #040612;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  box-shadow: 0 0 8px rgba(255, 153, 0, 0.6);
+  opacity: 0;
+  transform: scale(0.85);
+  pointer-events: none;
+  animation: demoAlertFade 3.8s ease-in-out infinite;
+}
+
+/* İki küme arasındaki geçiş oku */
+.stage-step-4 .batch-divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 12%;
+  gap: 4px;
+}
+
+.stage-step-4 .batch-arrow-icon {
+  font-size: 16px;
+  color: var(--cyan);
+  text-shadow: 0 0 8px var(--cyan);
+  animation: demoArrowNudge 1.6s ease-in-out infinite;
+}
+
+@keyframes demoArrowNudge {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(3px); }
+}
+
+.stage-step-4 .batch-subtext {
+  font-family: 'Space Mono', monospace;
+  font-size: 7px;
+  color: var(--amber);
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+  text-shadow: 0 0 6px rgba(255, 153, 0, 0.5);
+}
+
+/* Küpün 1, 2, 3 üzerinden zıplayıp öndeki kümeye atlaması */
+.stage-step-4 .batch-cube-runner {
+  position: absolute;
+  bottom: 25px;
+  left: 20px;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  border: 2px solid var(--cyan);
+  background: rgba(0, 240, 255, 0.5);
+  box-shadow: 0 0 12px var(--cyan);
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: demoBatchCubeHop 3.8s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+}
+
+/* Küp atlama koordinatları (Sol karttaki 1, 2, 3 platformları ve 4'e atlayış) */
+@keyframes demoBatchCubeHop {
+  /* Plat 1 iniş */
+  0%, 12% {
+    transform: translate(12px, 0);
+    opacity: 1;
+  }
+  /* 1'den 2'ye zıplama */
+  18% {
+    transform: translate(36px, -18px) rotate(-10deg);
+  }
+  24%, 34% {
+    transform: translate(60px, 0) rotate(0);
+  }
+  /* 2'den 3'e zıplama */
+  40% {
+    transform: translate(84px, -18px) rotate(-10deg);
+  }
+  46%, 56% {
+    transform: translate(108px, 0) rotate(0);
+  }
+  /* 3'TEN BÜYÜK ZIPLAMA (Sonuncu bloktan ayrılış) */
+  64% {
+    transform: translate(175px, -32px) rotate(35deg);
+  }
+  74%, 86% {
+    transform: translate(242px, 0) rotate(0);
+    opacity: 1;
+  }
+  /* Döngü başa dönerken sönüş */
+  92%, 100% {
+    transform: translate(242px, 0) scale(0.8);
+    opacity: 0;
+  }
+}
+
+/* Aydınlık kümenin sönme animasyonu: Küp 3'ten zıplayınca (60-85% arası) saydamlaşır */
+@keyframes demoLitBatchCycle {
+  0%, 56% {
+    opacity: 1;
+    border-color: var(--cyan);
+    box-shadow: 0 0 16px rgba(0, 240, 255, 0.25);
+  }
+  62%, 84% {
+    opacity: 0.28;
+    border-color: rgba(0, 240, 255, 0.2);
+    box-shadow: none;
+  }
+  92%, 100% {
+    opacity: 1;
+    border-color: var(--cyan);
+    box-shadow: 0 0 16px rgba(0, 240, 255, 0.25);
+  }
+}
+
+/* Küp zıplayınca çıkan 'SÖNÜYOR!' uyarısı */
+@keyframes demoAlertFade {
+  0%, 58% {
+    opacity: 0;
+    transform: translateY(4px) scale(0.8);
+  }
+  64%, 82% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  88%, 100% {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.8);
+  }
+}
+
+/* Prefers Reduced Motion: Kullanıcı animasyon istemiyorsa statik tut */
+@media (prefers-reduced-motion: reduce) {
+  .demo-btn-jump, .css-cube-1, .btn-l, .btn-r, .css-cube-2, .css-cube-gap,
+  .batch-cube-runner, .batch-lit, .batch-fade-alert, .beam-pulse, .batch-arrow-icon {
+    animation: none !important;
+  }
+}
+
+/* ══════════════ METİN ALANI ══════════════ */
+.tutorial-instruction {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.5;
+  margin-bottom: 20px;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ══════════════ ALT BUTONLAR VE İLERLEME NOKTALARI ══════════════ */
+.tutorial-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+}
+
+/* İlerleme Noktaları */
+.tutorial-dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.tut-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.tut-dot.active {
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan);
+  transform: scale(1.3);
+}
+
+.tutorial-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* En az 48px dokunma boyutu */
+.tut-btn {
+  height: 48px;
+  min-width: 90px;
+  padding: 0 18px;
+  border-radius: 10px;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  outline: none;
+  transition: transform 0.1s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.tut-btn:active {
+  transform: scale(0.95);
+}
+
+.tut-btn-skip {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.tut-btn-next {
+  background: rgba(0, 240, 255, 0.15);
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
+  box-shadow: 0 0 14px rgba(0, 240, 255, 0.3);
+}
+
+.tut-btn-start {
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.9) 0%, rgba(168, 68, 255, 0.9) 100%);
+  border: 1px solid rgba(0, 240, 255, 0.6);
+  color: #040612;
+  font-weight: 900;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+}
+
+/* HUD ve Game Over'daki Eğitimi Göster Butonları */
+.hud-btn {
+  pointer-events: auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  background: rgba(4, 15, 30, 0.7);
+  color: var(--cyan);
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  backdrop-filter: blur(8px);
+  touch-action: manipulation;
+}
+
+.hud-right {
+  display: flex;
+  align-items: center;
+}
+
+.sub-link-btn {
+  background: none;
+  border: none;
+  color: rgba(0, 240, 255, 0.7);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 8px 12px;
+  margin-top: 6px;
+  touch-action: manipulation;
+}
+
+/* ══════════════ YATAY MOBİL UYARLAMA (KÜÇÜK EKRANLAR) ══════════════ */
+@media (max-height: 440px) {
+  .tutorial-modal {
+    padding: 12px 20px 10px;
+    max-width: 500px;
+  }
+  .tutorial-header {
+    margin-bottom: 6px;
+  }
+  .tutorial-step-title {
+    font-size: 17px;
+  }
+  .tutorial-stage {
+    height: 104px;
+    margin-bottom: 8px;
+  }
+  .stage-step-4 .batch-card {
+    height: 74px;
+    padding: 6px 8px;
+  }
+  .stage-step-4 .batch-cube-runner {
+    bottom: 22px;
+  }
+  .tutorial-instruction {
+    margin-bottom: 8px;
+    font-size: 11.5px;
+    min-height: 28px;
+  }
+  .tut-btn {
+    height: 38px;
+    min-width: 76px;
+    font-size: 12px;
+  }
+}
+
